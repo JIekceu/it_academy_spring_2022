@@ -11,4 +11,5 @@ urlpatterns = [
          name='share_material'),
     path('create/', views.create_material,
          name='create_form'),
+    path('login/', views.custom_login, name='login'),
 ]

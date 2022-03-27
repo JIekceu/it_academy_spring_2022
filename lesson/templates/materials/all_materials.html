@@ -15,6 +15,9 @@
         Published: {{ material.publish }} by {{ material.author }}
 
     {% endfor %}
+    <p>
+        <a href="{% url "lesson:create_form" %}">Create new materials</a>
+    </p>
 
 {% endblock %}
 </body>

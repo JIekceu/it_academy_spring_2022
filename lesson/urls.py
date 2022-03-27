@@ -5,4 +5,6 @@ from . import views
 app_name = 'lesson'
 urlpatterns = [
     path('', views.all_materials, name='all_materials'),
+    path('<int:yy>/<int:mm>/<int:dd>/<slug:slug>',
+         views.detailed_material, name='detailed_material'),
 ]

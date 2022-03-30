@@ -4,6 +4,11 @@ from . import models
 # Register your models here.
 # admin.site.register(models.Material)
 
+admin.site.register(models.Comment)
+"""нужно для возможности посмотреть комменты в админке, чтобы не делать отдельную
+админ-панель для модераторов, а пустить их в админку с некоторыми ограничениями,
+для чистки комментов"""
+
 @admin.register(models.Material)
 class MaterialAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'material_type', 'publish')

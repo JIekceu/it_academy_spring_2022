@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect
 from django.shortcuts import render
 from django.views.generic import ListView
 
@@ -35,8 +36,19 @@ def detailed_material(request, yy, mm, dd, slug):
                                  publish__month=mm,
                                  publish__day=dd,
                                  slug=slug)
+
+    if request.method == 'POST':
+        comment_form = forms.CommentForm(request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.material = material
+            new_comment.save()
+        return redirect(material)   # POST redirect GET
+    else:
+        comment_form = forms.CommentForm()
     return render(request, "materials/detailed_material.html",
-                  {"material": material})
+                  {"material": material,
+                   "form": comment_form})
 
 
 def share_material(request, material_id):
@@ -55,7 +67,6 @@ def share_material(request, material_id):
             body = body_template.format(link=material_uri,
                                         comment=cd['comment'])
             send_mail(subject, body, 'admin@my.com', (cd['to_email'],))
-
     else:
         form = forms.EmailMaterialForm()
     return render(request,
@@ -72,8 +83,8 @@ def create_material(request):
             new_material.slug = new_material.title.replace(' ', '-')
             new_material.save()
             return render(request,
-                  "materials/detailed_material.html",
-                  {"material": new_material})
+                          "materials/detailed_material.html",
+                          {"material": new_material})
     else:
         material_form = forms.MaterialForm()
     return render(request,
@@ -98,14 +109,6 @@ def custom_login(request):
                     return HttpResponse('User account is not activated')
             else:
                 return HttpResponse('Incorrect User/Password')
-
-            new_material = material_form.save(commit=False)
-            new_material.author = User.objects.first()
-            new_material.slug = new_material.title.replace(' ', '-')
-            new_material.save()
-            return render(request,
-                  "materials/detailed_material.html",
-                  {"material": new_material})
     else:
         form = forms.LoginForm()
         return render(request, 'login.html', {'form': form})

@@ -9,6 +9,8 @@ admin.site.register(models.Comment)
 админ-панель для модераторов, а пустить их в админку с некоторыми ограничениями,
 для чистки комментов"""
 
+admin.site.register(models.Profile)
+
 @admin.register(models.Material)
 class MaterialAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'material_type', 'publish')

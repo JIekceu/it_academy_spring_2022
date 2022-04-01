@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os.path
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -127,3 +127,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LOGIN_URL = '/lesson/login/'
 LOGIN_REDIRECT_URL = '/lesson/'
+
+MEDIA_URL = '/lesson/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'lesson/media/')
+# MEDIA_ROOT = os.path.join(BASE_DIR, '/media/')

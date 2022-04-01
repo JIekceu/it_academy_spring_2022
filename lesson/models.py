@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 from django.utils import timezone
 from django.urls import reverse
+
 
 
 # Create your models here.
@@ -45,3 +47,13 @@ class Comment(models.Model):
     name = models.CharField(max_length=250)
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    birth = models.DateField(null=True, blank=True)
+    photo = models.ImageField(upload_to="User/%Y/%m/%d", blank=True)
+
+
+
+

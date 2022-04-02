@@ -5,8 +5,9 @@
 {% block content %}
     <h2>Hi, {{ request.user.first_name }}:</h2>
     <p>Birthday: {{ request.user.profile.birth }}</p>
+    <a href="{% url "lesson:edit_profile" %}">Edit profile</a>
     <h2>Author's materials: </h2><br>
-    <ul
+    <ul>
         {% for material in request.user.user_materials.all %}
             <li>
                <h3><a href="{{material.get_absolute_url}}">{{ material.title }}</a></h3>
